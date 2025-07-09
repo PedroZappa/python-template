@@ -36,7 +36,6 @@ dev = [
 
 # Tools
 [tool.setuptools]
-py-modules = ["puzzle", "logic"]
 
 [tool.setuptools.package-data]
 "*" = ["py.typed"]
