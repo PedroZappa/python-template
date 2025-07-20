@@ -39,7 +39,11 @@ else
 fi
 
 # Initialize project - handle both template and direct modification scenarios
-if [ -f "pyproject.template.toml" ]; then
+if [ ! -f "pyproject.template.toml" ]; then
+    echo "Error: pyproject.template.toml not found"
+elif [ -f "pyproject.toml" ]; then
+    echo "Error: pyproject.toml already exists"
+else
     echo "Generating pyproject.toml from template..."
     
     # Use envsubst for cleaner variable substitution
@@ -69,9 +73,6 @@ if [ -f "pyproject.template.toml" ]; then
     
     echo "✓ pyproject.toml generated from template with py-modules: $py_modules_str"
     
-else
-    echo "Error: pyproject.template.toml not found"
-    exit 1
 fi
 
 # Create and activate virtual environment
@@ -103,3 +104,4 @@ else
 fi
 
 pip list
+
