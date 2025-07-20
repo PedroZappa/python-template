@@ -184,15 +184,23 @@ CLEAN_TARGETS := $(EXCLUDE_DIRS) \
                  *.pyc \
                  *_dump.csv
 
-clean: ## Remove object files
-	@echo "*** $(YEL)Removing $(MAG)$(NAME)$(D) and deps $(YEL)object files$(D)"
+clean: ## Remove temporary files
+	@echo "*** $(YEL)Removing $(MAG)$(NAME)$(D) and $(YEL)deps$(D)"
 	@for target in $(CLEAN_TARGETS); do \
+		if [ "$$target" = ".venv" ]; then \
+			continue; \
+		fi; \
 		if [ -e "$$target" ] || [ -d "$$target" ]; then \
 			$(RM) "$$target"; \
 			echo "*** $(YEL)Removed $(CYA)$$target$(D)"; \
 		fi; \
 	done
 	@echo "$(_SUCCESS) Clean completed!"
+
+fclean: clean ## Remove temporary files & .venv
+	@echo "*** $(YEL)Removing $(MAG)$(NAME)$(D) $(YEL)$(VENV)$(D)"
+	@$(RM) $(VENV)
+
 
 ##@ Help 󰛵
 
