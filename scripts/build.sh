@@ -42,7 +42,7 @@ fi
 if [ ! -f "pyproject.template.toml" ]; then
     echo "Error: pyproject.template.toml not found"
 elif [ -f "pyproject.toml" ]; then
-    echo "Error: pyproject.toml already exists"
+    echo "Skipping: pyproject.toml already exists"
 else
     echo "Generating pyproject.toml from template..."
     
@@ -87,11 +87,7 @@ pip install --upgrade pip
 # Priority order: pyproject.toml > requirements.txt > setup.py
 if [ -f "pyproject.toml" ]; then
     echo "Installing from pyproject.toml..."
-    if grep -q "optional-dependencies" pyproject.toml; then
-        pip install -e .[dev]
-    else
-        pip install -e .
-    fi
+      pip install -e .
 elif [ -f "requirements.txt" ]; then
     echo "Installing from requirements.txt..."
     pip install -r requirements.txt
