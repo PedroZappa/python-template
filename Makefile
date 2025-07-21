@@ -68,7 +68,15 @@ init:			## Initialize project
 	@if [ ! -f "pyproject.toml" ]; then \
 		echo "$(B)Initializing project: $(PROJECT_NAME) v$(PROJECT_VERSION)$(D)"; \
 		poetry init $(POETRY_INIT_ARGS); \
-		awk '/^\[tool\.poetry\]/{print; print "packages = [{ include = \"*\", from = \"src\" }]"; next}1' pyproject.toml > tmp && mv tmp pyproject.toml; \
+		awk '\
+			/^\[tool\.poetry\]/ { \
+				print; \
+				print "packages = ["; \
+				print "  { include = \"*\", from = \"src\" }"; \
+				print "]"; \
+				next \
+			} \
+			{ print }' pyproject.toml > tmp && mv tmp pyproject.toml; \
 	fi
 
 env:			## Create virtual environment
